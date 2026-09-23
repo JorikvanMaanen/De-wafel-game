@@ -9,8 +9,10 @@ function updateScoreDisplay() {
     document.getElementById('score').textContent = score;
 }
 
-function gamble() {
-    const gambleAmount = parseInt(document.getElementById('gambleAmount').value);
+function gamble(gambleAmount) {
+    if (typeof gambleAmount === 'undefined') {
+        const gambleAmount = parseInt(document.getElementById('gambleAmount').value);
+    }
     if (score >= gambleAmount) {
         score -= gambleAmount;
         const win = Math.random() < 0.5;
@@ -19,4 +21,8 @@ function gamble() {
         }
     }
     updateScoreDisplay();
+}
+
+function allIn() {
+    gamble(score);
 }
