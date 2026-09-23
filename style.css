@@ -69,6 +69,16 @@
     gap: 12px;
 }
 
+.result {
+    padding: 12px 20px;
+    height: 500px;
+    width: 150%;
+    border-radius: 12px;
+    background: rgb(255 248 226 / 80%);
+    overflow-y: scroll;
+
+}
+
 button {
     padding: 12px 18px;
     border: 2px solid #6f4b2a;
