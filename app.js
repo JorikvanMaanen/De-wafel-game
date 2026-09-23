@@ -1,7 +1,10 @@
 //all in knop
 //leaderboard
+//krunker scroll
+//slider om je kan te verhogen maar gains verlagen 
 
 let score = 0;
+let ColorTimeout;
 
 function addScore() {
     score += 1;
@@ -10,6 +13,21 @@ function addScore() {
 
 function updateScoreDisplay() {
     document.getElementById('score').textContent = score;
+    changebackgroundcolor();
+}
+
+function changebackgroundcolor() {
+    const counter = document.getElementById('counter');
+    clearTimeout(ColorTimeout);
+
+    if (score === 0) {
+        counter.style.backgroundColor = "red";
+        ColorTimeout = setTimeout(() => {
+            counter.style.backgroundColor = "rgb(255 248 226 / 80%)";
+        }, 500);
+    } else {
+        counter.style.backgroundColor = "rgb(255 248 226 / 80%)";
+    }
 }
 
 function addResult(message) {
@@ -17,7 +35,7 @@ function addResult(message) {
     const resultContainer = resultText.parentElement;
     if (resultText.textContent) {
         resultText.append(document.createElement('br'));
-        
+
     }
     resultText.append(document.createTextNode(message));
     resultContainer.scrollTo({
