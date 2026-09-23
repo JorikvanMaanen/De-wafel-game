@@ -1,0 +1,156 @@
+@keyframes rgb {
+    12.5% { background-color: rgb(255, 0, 0);
+            border-color: rgb(255, 0, 191);}
+    25% {   background-color: rgb(255, 153, 0);
+            border-color: rgb(153, 0, 255);}
+    37.5% { background-color: rgb(251, 255, 0);
+            border-color: rgb(0, 4, 255);}
+    50% {   background-color: rgb(0, 255, 13);
+            border-color: rgb(0, 255, 221);}
+    62.5% { background-color: rgb(0, 255, 221);
+            border-color: rgb(0, 255, 13);}
+    75% {   background-color: rgb(0, 4, 255);
+            border-color: rgb(251, 255, 0);}
+    87.5% { background-color: rgb(153, 0, 255);
+            border-color: rgb(255, 153, 0);}
+    100% {  background-color: rgb(255, 0, 191);
+            border-color: (255, 0, 0);}
+}
+
+.on {
+    background-color: greenyellow;
+    border: 5px solid rgb(157, 230, 84);
+}
+
+.apple {
+    background-color: rgb(234, 1, 1);
+    border: 5px solid rgb(179, 20, 20);
+}
+
+.GoldApple {
+    background-color: yellow;
+    border: 5px solid rgb(219, 187, 4);
+}
+
+.DiamondApple {
+    background-color: rgb(0, 187, 255);
+    border: 5px solid rgb(0, 140, 156);
+}
+
+.RGBapple {
+    animation-name: rgb;
+    animation-duration: 2s;
+    border: solid 5px;
+    animation-iteration-count: infinite;
+}
+
+body {
+    background-color: aliceblue;
+    margin: 0%;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    margin: 0%;
+}
+
+table {
+    margin-top: 2%;
+    background-color: lightgrey;
+    border: 3px solid gray;
+    width: 38%;
+    aspect-ratio: 1/1;
+    margin-bottom: 20px;
+    border-spacing: 0cm;
+}
+
+tr, td {
+    width: 5%;
+    height: 5%;
+    padding: 0%;
+}
+
+#countdown, #scoreText {
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+h1 {
+    margin: 0%;
+}
+
+.game {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin: 0; height: 100%; overflow: hidden
+}
+
+img {
+    width: 3em;
+    height: 3em;
+    padding: 1%;
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+    margin-left: 10px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 17px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
