@@ -11,7 +11,7 @@ function updateScoreDisplay() {
 
 function gamble(gambleAmount) {
     if (typeof gambleAmount === 'undefined') {
-        const gambleAmount = parseInt(document.getElementById('gambleAmount').value);
+        gambleAmount = parseInt(document.getElementById('gambleAmount').value);
     }
     if (score >= gambleAmount) {
         score -= gambleAmount;
