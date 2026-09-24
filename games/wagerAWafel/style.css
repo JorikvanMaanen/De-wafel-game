@@ -113,7 +113,7 @@
 
 .roll-pointer {
     position: absolute;
-    top: -7px;
+    top: 35px;
     z-index: 1;
     width: 0;
     height: 0;

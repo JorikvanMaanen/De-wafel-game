@@ -1,10 +1,10 @@
 //leaderboard
-//krunker scroll
-//slider om je kan te verhogen maar gains verlagen 
+//slider om je kans te verhogen maar gains verlagen 
 
 let score = 0;
 let ColorTimeout;
 let rewardRollActive = false;
+let rewardRollCloseTimeout;
 
 function addScore() {
     score += 1;
@@ -35,34 +35,35 @@ function gamble(gambleAmount) {
     if (typeof gambleAmount === 'undefined') {
         gambleAmount = parseInt(document.getElementById('gambleAmount').value);
     }
-    if (score >= gambleAmount) {
-        score -= gambleAmount;
-        const win = Math.random() < 0.5;
-        if (win) {
-            score += gambleAmount * 2;
-        }
-    }
-    updateScoreDisplay();
-}
-
-function allIn() {
-    if (rewardRollActive || score <= 0) {
+    if (rewardRollActive || !Number.isInteger(gambleAmount) || gambleAmount < 1 || score < gambleAmount) {
         return;
     }
 
+    startRewardRoll(gambleAmount, document.getElementById('confirm'));
+}
+
+function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function startRewardRoll(amount, sourceButton) {
     rewardRollActive = true;
+
     const allInButton = document.getElementById('allIn');
+    const confirmButton = document.getElementById('confirm');
     const rollWheel = document.getElementById('rollWheel');
     const rollStatus = document.getElementById('rollStatus');
-    const amount = score;
     const win = Math.random() < 0.5;
-    const targetColor = win ? 'GROEN' : 'ROOD';
-    const targetAngle = win ? 90 : 270;
-    const fullSpins = 5 + Math.floor(Math.random() * 3);
+    const targetColor = win ? 'WON' : 'LOST';
+    const targetAngle = win ? getRandom(1, 179) : getRandom(181, 359);
+    const fullSpins = Math.round(getRandom(8, 20));
 
+    clearTimeout(rewardRollCloseTimeout);
     document.getElementById('rewardRoll').classList.add('is-visible');
+    sourceButton.disabled = true;
     allInButton.disabled = true;
-    rollStatus.textContent = 'De Reward Roll draait...';
+    confirmButton.disabled = true;
+    rollStatus.textContent = '...';
     rollWheel.classList.remove('is-spinning');
     void rollWheel.offsetWidth;
     rollWheel.style.transform = `rotate(${fullSpins * 360 + targetAngle}deg)`;
@@ -75,10 +76,20 @@ function allIn() {
         }
 
         updateScoreDisplay();
-        rollStatus.textContent = `Je landde op ${targetColor}!`;
+        rollStatus.textContent = `You ${targetColor}!`;
         rewardRollActive = false;
         allInButton.disabled = false;
+        confirmButton.disabled = false;
+        rewardRollCloseTimeout = setTimeout(closeRewardRoll, 2000);
     }, 2800);
+}
+
+function allIn() {
+    if (rewardRollActive || score <= 0) {
+        return;
+    }
+
+    startRewardRoll(score, document.getElementById('allIn'));
 }
 
 function closeRewardRoll() {
