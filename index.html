@@ -11,6 +11,9 @@
 <body class="body">
     <h1>Het wafel spel</h1>
     <main class="game-area">
+        <div class="leaderboard" id="leaderboard">
+            <h2></h2>
+        </div>
         <div class="wafel-score">
             <img class="wafel" onclick="addScore()" src="img/wafel.webp" alt="Wafel" draggable="false">
 
@@ -20,6 +23,18 @@
         </div>
 
         <div class="game-panel">
+            <div class="reward-roll" id="rewardRoll" aria-live="polite">
+                <div class="reward-roll-box">
+                    <button class="roll-close" type="button" onclick="closeRewardRoll()" aria-label="Reward Roll sluiten">&times;</button>
+                    <div class="roll-pointer"></div>
+                    <div class="roll-wheel" id="rollWheel">
+                        <span class="roll-label roll-label-green">green</span>
+                        <span class="roll-label roll-label-red">red</span>
+                    </div>
+                    <p id="rollStatus">Klaar voor een All in</p>
+                </div>
+            </div>
+
             <div class="buttons">
 
                 <input type="number" id="gambleAmount" placeholder="Enter gamble amount" min="1">

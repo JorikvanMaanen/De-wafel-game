@@ -50,6 +50,107 @@
     min-width: 190px;
 }
 
+.reward-roll {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgb(47 36 27 / 72%);
+}
+
+.reward-roll.is-visible {
+    display: flex;
+    animation: roll-pop-in 180ms ease-out;
+}
+
+.reward-roll-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    width: min(90vw, 460px);
+    padding: 42px 30px 30px;
+    border: 8px solid #f4d58b;
+    border-radius: 18px;
+    background: #fff8e2;
+    box-shadow: 0 18px 40px rgb(0 0 0 / 35%);
+}
+
+.roll-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    padding: 0 8px;
+    border: 0;
+    background: transparent;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.roll-close:hover {
+    background: transparent;
+    transform: none;
+}
+
+.roll-wheel {
+    width: min(65vw, 300px);
+    height: min(65vw, 300px);
+    position: relative;
+    border: 8px solid #fff8e2;
+    border-radius: 50%;
+    background: conic-gradient(#c93535 0deg 180deg, #2d9b58 180deg 360deg);
+    box-shadow: 0 6px 12px rgb(47 36 27 / 22%);
+    transform: rotate(0deg);
+}
+
+.roll-wheel.is-spinning {
+    transition: transform 2800ms cubic-bezier(.12, .8, .18, 1);
+}
+
+.roll-pointer {
+    position: absolute;
+    top: -7px;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 22px solid #2f241b;
+}
+
+.roll-label {
+    position: absolute;
+    top: 64px;
+    color: #fff8e2;
+    font-weight: bold;
+    font-size: .8rem;
+    text-shadow: 1px 1px 2px rgb(47 36 27 / 55%);
+}
+
+.roll-label-red {
+    right: 5px;
+}
+
+.roll-label-green {
+    left: 10px;
+}
+
+.reward-roll p {
+    margin: 0;
+    min-height: 1.2em;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+@keyframes roll-pop-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .counter {
     padding: 12px 20px;
     border-radius: 12px;
@@ -94,6 +195,11 @@ button {
 button:hover {
     background-color: #f4d58b;
     transform: translateX(3px);
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: .65;
 }
 
 @keyframes rgb {
