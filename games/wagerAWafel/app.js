@@ -7,7 +7,12 @@ let rewardRollActive = false;
 let rewardRollCloseTimeout;
 const clickTimes = [];
 const clickWindowMs = 1000;
-const maxClicksPerWindow = 12;
+const maxClicksPerWindow = 17;
+const clickIntervals = [];
+const consistentIntervalCount = 8;
+const consistentIntervalToleranceMs = 3;
+const intervalResetMs = 1500;
+let lastClickTime;
 let autoClickDetected = false;
 
 function addScore(clickEvent) {
@@ -17,11 +22,34 @@ function addScore(clickEvent) {
 
     if (clickEvent && !clickEvent.isTrusted) {
         autoClickDetected = true;
-        lockWafel();
+        lockWafel('Synthetic clicking detected.');
         return;
     }
 
     const now = performance.now();
+    if (lastClickTime !== undefined) {
+        const interval = now - lastClickTime;
+
+        if (interval > intervalResetMs) {
+            clickIntervals.length = 0;
+        } else {
+            clickIntervals.push(interval);
+            if (clickIntervals.length > consistentIntervalCount) {
+                clickIntervals.shift();
+            }
+
+            const shortestInterval = Math.min(...clickIntervals);
+            const longestInterval = Math.max(...clickIntervals);
+            if (clickIntervals.length === consistentIntervalCount
+                && longestInterval - shortestInterval <= consistentIntervalToleranceMs) {
+                autoClickDetected = true;
+                lockWafel('Perfectly timed clicking detected.');
+                return;
+            }
+        }
+    }
+    lastClickTime = now;
+
     clickTimes.push(now);
     while (clickTimes[0] <= now - clickWindowMs) {
         clickTimes.shift();
@@ -29,7 +57,7 @@ function addScore(clickEvent) {
 
     if (clickTimes.length > maxClicksPerWindow) {
         autoClickDetected = true;
-        lockWafel();
+        lockWafel('Auto-clicking detected: click speed is too high.');
         return;
     }
 
@@ -37,9 +65,9 @@ function addScore(clickEvent) {
     document.getElementById('score').textContent = score;
 }
 
-function lockWafel() {
+function lockWafel(message) {
     document.querySelector('.wafel').classList.add('is-locked');
-    document.getElementById('antiCheatStatus').textContent = 'Auto-clicking detected. Wafel clicking disabled.';
+    document.getElementById('antiCheatStatus').textContent = `${message} Wafel clicking disabled.`;
 }
 
 function updateScoreDisplay() {
