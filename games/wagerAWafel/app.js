@@ -5,10 +5,41 @@ let score = 0;
 let ColorTimeout;
 let rewardRollActive = false;
 let rewardRollCloseTimeout;
+const clickTimes = [];
+const clickWindowMs = 1000;
+const maxClicksPerWindow = 12;
+let autoClickDetected = false;
 
-function addScore() {
+function addScore(clickEvent) {
+    if (autoClickDetected) {
+        return;
+    }
+
+    if (clickEvent && !clickEvent.isTrusted) {
+        autoClickDetected = true;
+        lockWafel();
+        return;
+    }
+
+    const now = performance.now();
+    clickTimes.push(now);
+    while (clickTimes[0] <= now - clickWindowMs) {
+        clickTimes.shift();
+    }
+
+    if (clickTimes.length > maxClicksPerWindow) {
+        autoClickDetected = true;
+        lockWafel();
+        return;
+    }
+
     score += 1;
     document.getElementById('score').textContent = score;
+}
+
+function lockWafel() {
+    document.querySelector('.wafel').classList.add('is-locked');
+    document.getElementById('antiCheatStatus').textContent = 'Auto-clicking detected. Wafel clicking disabled.';
 }
 
 function updateScoreDisplay() {
