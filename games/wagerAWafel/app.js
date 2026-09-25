@@ -15,6 +15,21 @@ const intervalResetMs = 1500;
 let lastClickTime;
 let autoClickDetected = false;
 
+function moveWafelRandomly() {
+    const wafel = document.querySelector('.wafel');
+    const wafelBox = document.querySelector('.wafel-box');
+    const maxLeft = wafelBox.clientWidth - wafel.offsetWidth;
+    const maxTop = wafelBox.clientHeight - wafel.offsetHeight;
+
+    wafel.style.left = `${Math.random() * maxLeft}px`;
+    wafel.style.top = `${Math.random() * maxTop}px`;
+}
+
+window.addEventListener('load', () => {
+    moveWafelRandomly();
+    setInterval(moveWafelRandomly, 2200);
+});
+
 function addScore(clickEvent) {
     if (autoClickDetected) {
         return;

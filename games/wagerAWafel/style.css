@@ -31,11 +31,28 @@
     margin: 0 auto;
 }
 
+.wafel-box {
+    --wafel-size: min(136px, 34vw);
+    position: relative;
+    width: min(360px, 82vw);
+    height: min(360px, 82vw);
+    border: 8px solid #f4d58b;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgb(255 248 226 / 35%);
+}
+
 .wafel {
-    width: min(360px, 360px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--wafel-size);
+    height: var(--wafel-size);
+    box-sizing: border-box;
     border: 8px solid #f4d58b;
     border-radius: 18px;
     cursor: pointer;
+    transition: top 1800ms ease-in-out, left 1800ms ease-in-out, transform 150ms ease;
 }
 
 .wafel-score {
